@@ -1,6 +1,6 @@
 ---
 name: Alien-Judy
-version: 0.02
+version: 0.03
 author:
   - 'Joshua ben Jore <jjore@cpan.org>'
 abstract: A wrapper for installing the Judy library
@@ -12,7 +12,7 @@ build_requires:
 provides:
   Alien::Judy:
     file: lib/Alien/Judy.pm
-    version: 0.02
+    version: 0.03
 generated_by: Module::Build version 0.3
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
