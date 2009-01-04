@@ -42,6 +42,7 @@ src/Judy-1.0.4/doc/ext/LICENSE
 src/Judy-1.0.4/doc/ext/README
 src/Judy-1.0.4/doc/ext/README_deliver
 src/Judy-1.0.4/doc/int/10minutes.htm
+src/Judy-1.0.4/doc/man/man3/EMPTY
 src/Judy-1.0.4/doc/Makefile.am
 src/Judy-1.0.4/doc/Makefile.in
 src/Judy-1.0.4/INSTALL
