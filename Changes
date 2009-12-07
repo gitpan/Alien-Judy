@@ -1,5 +1,9 @@
 Revision history for Alien-Judy
 
+0.09    Sun Dec  6 21:17:00 2009
+        Absolutify --prefix=%s
+        Run `./configure', not `sh configure' to maybe help a dmake user who didn't have sh
+
 0.08    Sun Jan  4 11:10:00 2009
         Adding missing directory src/Judy-1.0.4/doc/man/man3
         Adding placeholder file src/Judy-1.0.4/doc/man/man3/EMPTY to keep its directory in existence

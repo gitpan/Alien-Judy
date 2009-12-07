@@ -1,19 +1,21 @@
 ---
 name: Alien-Judy
-version: 0.08
+version: 0.09
 author:
   - 'Joshua ben Jore <jjore@cpan.org>'
 abstract: A wrapper for installing the Judy library
 license: perl
-resources:
-  license: http://dev.perl.org/licenses/
 build_requires:
   Test::More: 0
+configure_requires:
+  Module::Build: 0.340201
+generated_by: Module::Build version 0.340201
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
 provides:
   Alien::Judy:
     file: lib/Alien/Judy.pm
-    version: 0.08
-generated_by: Module::Build version 0.3
-meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.2.html
-  version: 1.2
+    version: 0.09
+resources:
+  license: http://dev.perl.org/licenses/

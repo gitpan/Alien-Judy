@@ -12,8 +12,16 @@ use Cwd 'cwd';
 
 our $Orig_CWD = cwd();
 
-sub _chdir_to_judy { chdir 'src/Judy-1.0.4' or die "Can't chdir to src/Judy-1.0.4: $!" }
-sub _chdir_back { chdir $Orig_CWD or die "Can't chdir to $Orig_CWD: $!" }
+sub _chdir_to_judy {
+    print "cd src/Judy-1.0.4\n";
+    chdir 'src/Judy-1.0.4'
+	or die "Can't chdir to src/Judy-1.0.4: $!";
+}
+sub _chdir_back {
+    print "cd $Orig_CWD\n";
+    chdir $Orig_CWD
+	or die "Can't chdir to $Orig_CWD: $!";
+}
 use constant MAKE => [];
 
 sub _run {
@@ -21,7 +29,12 @@ sub _run {
     
     $prog = $self->notes('your_make') if $prog eq MAKE();
     
-    return system( "$prog @args" ) == 0 ? 1 : 0;
+    my $command = join ' ', $prog, @args;
+
+    print "$command\n";
+    system $command;
+
+    return $? == 0;
 }
 
 
@@ -31,20 +44,29 @@ sub _run_judy_configure {
     if ( $self->notes('build_judy') =~ /^y/i ) {
 	_chdir_to_judy();
 	
-	$self->_run( qw( sh configure ), $self->notes('configure_args') )
+	$self->_run( qw( ./configure ), $self->notes('configure_args') )
 	    or do { warn "configuring Judy failed";      return 0 };
 	
 	_chdir_back();
     }
 }
 
-sub _default_config_args {
+sub _absolute_prefix {
     my ($self) = @_;
 
     my $props = $self->{properties};
     my $prefix = $props->{install_base} ||
 	$props->{prefix} ||
 	$Config{siteprefix};
+
+    return Cwd::abs_path( $prefix );
+}
+
+sub _default_config_args {
+    my ($self) = @_;
+
+    my $props = $self->{properties};
+    my $prefix = $self->_absolute_prefix;
 
     my %args = (
         prefix => $prefix,
