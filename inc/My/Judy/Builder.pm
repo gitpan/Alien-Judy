@@ -6,22 +6,24 @@ use warnings;
 use Module::Build;
 our @ISA = 'Module::Build';
 
-use Config '%Config';
+use Config ();
 use File::Spec;
-use Cwd 'cwd';
+use Cwd ();
 
-our $Orig_CWD = cwd();
+our $Orig_CWD = Cwd::cwd();
 
 sub _chdir_to_judy {
-    print "cd src/Judy-1.0.4\n";
-    chdir 'src/Judy-1.0.4'
-	or die "Can't chdir to src/Judy-1.0.4: $!";
+    chdir 'src/judy-1.0.5'
+        or die "Can't chdir to src/judy-1.0.5: $!";
+    return;
 }
+
 sub _chdir_back {
-    print "cd $Orig_CWD\n";
     chdir $Orig_CWD
-	or die "Can't chdir to $Orig_CWD: $!";
+        or die "Can't chdir to $Orig_CWD: $!";
+    return;
 }
+
 use constant MAKE => [];
 
 sub _run {
@@ -29,12 +31,7 @@ sub _run {
     
     $prog = $self->notes('your_make') if $prog eq MAKE();
     
-    my $command = join ' ', $prog, @args;
-
-    print "$command\n";
-    system $command;
-
-    return $? == 0;
+    return system( "$prog @args" ) == 0 ? 1 : 0;
 }
 
 
@@ -42,12 +39,20 @@ sub _run_judy_configure {
     my ($self) = @_;
     
     if ( $self->notes('build_judy') =~ /^y/i ) {
-	_chdir_to_judy();
+        _chdir_to_judy();
+        
+        $self->_run( './configure', $self->notes('configure_args') )
+            or do {
+                warn "configuring Judy failed";
+                return 0;
+            };
+        
+        _chdir_back();
 	
-	$self->_run( qw( ./configure ), $self->notes('configure_args') )
-	    or do { warn "configuring Judy failed";      return 0 };
-	
-	_chdir_back();
+	return 1;
+    }
+    else {
+	return 1;
     }
 }
 
@@ -55,9 +60,10 @@ sub _absolute_prefix {
     my ($self) = @_;
 
     my $props = $self->{properties};
-    my $prefix = $props->{install_base} ||
-	$props->{prefix} ||
-	$Config{siteprefix};
+    my $prefix
+        =  $props->{install_base}
+        || $props->{prefix}
+        || $Config::Config{siteprefix};
 
     return Cwd::abs_path( $prefix );
 }
@@ -65,40 +71,45 @@ sub _absolute_prefix {
 sub _default_config_args {
     my ($self) = @_;
 
-    my $props = $self->{properties};
-    my $prefix = $self->_absolute_prefix;
+    my $prefix = $self->_absolute_prefix();
 
     my %args = (
         prefix => $prefix,
         libdir => File::Spec->catdir(
-            $self->install_destination('arch'), 'Alien', 'Judy'
+            $self->install_destination('arch'),
+            'Alien',
+            'Judy'
         ),
-	);
+    );
     
-    return join ' ', map { "--$_=$args{$_}" } sort keys %args;
-    
+    return
+        join ' ',
+        map { "--$_=$args{$_}" }
+        sort
+        keys %args;
 }
 
 sub ACTION_code {
     my ($self) = @_;
 
-   if ( $self->notes('build_judy') =~ /^y/i ) {
-	$self->SUPER::ACTION_code;
+    if ( $self->notes('build_judy') =~ /^y/i ) {
+        $self->SUPER::ACTION_code();
 
-	_chdir_to_judy();
-	
-	$self->_run(MAKE())
-	    or do {
-		warn "building Judy failed";
-		_chdir_back();
-		return 0 };
-	
-	_chdir_back();
+        _chdir_to_judy();
+        
+        $self->_run(MAKE())
+            or do {
+                warn "building Judy failed";
+                _chdir_back();
+                return 0;
+            };
+        
+        _chdir_back();
 
-	return 1;
+        return 1;
     }
     else {
-    	return $self->SUPER::ACTION_code;
+	return $self->SUPER::ACTION_code();
     }
 }
 
@@ -107,22 +118,23 @@ sub ACTION_test {
     my ($self) = @_;
     
     if ( $self->notes('build_judy') =~ /^y/i ) {
-        $self->SUPER::ACTION_test;
+        $self->SUPER::ACTION_test();
     
-	_chdir_to_judy();
-	
-	$self->_run( MAKE(), 'check' )
-	    or do {
-		warn "checking Judy failed ";
-		_chdir_back();
-		return 0 };
-	
-	_chdir_back();
+        _chdir_to_judy();
+        
+        $self->_run( MAKE(), 'check' )
+            or do {
+                warn "checking Judy failed ";
+                _chdir_back();
+                return 0;
+            };
+        
+        _chdir_back();
 
-	return 1;
+        return 1;
     }
     else {
-    	return $self->SUPER::ACTION_test;
+        return $self->SUPER::ACTION_test();
     }
 }
 
@@ -130,24 +142,24 @@ sub ACTION_install {
     my ($self) = @_;
     
     if ( $self->notes('build_judy') =~ /^y/i ) {
-	$self->SUPER::ACTION_install;
+        $self->SUPER::ACTION_install();
 
-	_chdir_to_judy();
-	
-	$self->_run( MAKE(), 'install' )
-	    or do {
-		warn "installing Judy failed ";
-		_chdir_back();
-		return 0 };
-	
-	_chdir_back();
+        _chdir_to_judy();
+        
+        $self->_run( MAKE(), 'install' )
+            or do {
+                warn "installing Judy failed ";
+                _chdir_back();
+                return 0;
+            };
+        
+        _chdir_back();
 
-	return 1;
+        return 1;
     }
     else {
-    	return $self->SUPER::ACTION_install;
+        return $self->SUPER::ACTION_install();
     }
 }
-
 
 1;

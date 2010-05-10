@@ -1,3 +1,0 @@
-This directory, src/Judy-1.04/doc/man/man3 was previously empty and
-getting omitted by the perl distribution creator and allowing the CPAN
-builds to fail. This file, EMPTY, exists to keep Module::Build honest.
