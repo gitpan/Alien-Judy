@@ -8,14 +8,6 @@ use Config ();
 use Cwd ();
 use File::Spec ();
 
-use Exporter ();
-@ISA = 'Exporter';
-
-@EXPORT_OK = qw( inc_dirs lib_dirs );
-%EXPORT_TAGS = (
-    all => \ @EXPORT_OK,
-);
-
 sub unique {
     my %seen;
     return
@@ -25,23 +17,25 @@ sub unique {
 
 sub inc_dirs {
     return
-        grep { $_ && -d }
+        grep { defined() && length() && -d }
         unique(
             Cwd::getcwd(),
             map { File::Spec->catdir( $_, 'include' ) }
+            grep { defined() && length() }
             @Config::Config{qw( siteprefixexp prefixexp )}
         );
 }
 
 sub lib_dirs {
     return
-        grep { $_ && -d }
+        grep { defined() && length() && -d }
         unique(
             map { File::Spec->catdir( $_, 'Alien', 'Judy' ) }
+            grep { defined() && length() }
             @Config::Config{qw(sitearchexp sitearch)}
         );
 }
 
-$VERSION = '0.10';
+$VERSION = '0.11';
 
 1;
