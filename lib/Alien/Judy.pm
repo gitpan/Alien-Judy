@@ -20,9 +20,9 @@ sub inc_dirs {
         grep { defined() && length() && -d }
         unique(
             Cwd::getcwd(),
-            map { File::Spec->catdir( $_, 'include' ) }
+            map { File::Spec->catdir( $_, 'Alien', 'Judy' ) }
             grep { defined() && length() }
-            @Config::Config{qw( siteprefixexp prefixexp )}
+            @Config::Config{qw(sitearchexp sitearch)}
         );
 }
 
@@ -36,6 +36,6 @@ sub lib_dirs {
         );
 }
 
-$VERSION = '0.11';
+$VERSION = '0.12';
 
 1;
