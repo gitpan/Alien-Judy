@@ -1,12 +1,21 @@
 ---
 abstract: 'A wrapper for installing the Judy library'
-author:
-  - 'Joshua ben Jore <jjore@cpan.org>'
+author: []
 build_requires:
   ExtUtils::CBuilder: 0
   Test::More: 0
 configure_requires:
-  Module::Build: 0.36
+  Config: 0
+  Cwd: 0
+  ExtUtils::LibList: 0
+  File::Copy: 0
+  File::Path: 0
+  File::Spec: 0
+  Module::Build: 0
+  lib: 0
+  perl: 5.005
+  vars: 0
+dynamic_config: 1
 generated_by: 'Module::Build version 0.3603'
 license: perl
 meta-spec:
@@ -16,7 +25,7 @@ name: Alien-Judy
 provides:
   Alien::Judy:
     file: lib/Alien/Judy.pm
-    version: 0.13
+    version: 0.14
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.13
+version: 0.14

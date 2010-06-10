@@ -1,8 +1,10 @@
-Alien-Judy-*
-Judy-*
+/Alien-Judy-*
+/Judy-*
+
+/README
 
 # WTF, why does CPANTS write this file?
-Debian_CPANTS.txt
+/Debian_CPANTS.txt
 
 # Compilation artifacts
 *.bs
@@ -10,14 +12,14 @@ Debian_CPANTS.txt
 *.o
 
 # EU::MM
-blib
-pm_to_blib
-Makefile
-Makefile.old
+/blib
+/pm_to_blib
+/Makefile
+/Makefile.old
 
 # M::B
-_build
-Build
+/_build
+/Build
 
 # Emacs
 .#*
@@ -25,8 +27,9 @@ Build
 *~
 
 # Distribution artifacts
-MANIFEST.bak
-META.yml
+/MANIFEST.bak
+/META.yml
+/MYMETA.yml
 
 # bin/release
-Changes.bak
+/Changes.bak
