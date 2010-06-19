@@ -23,6 +23,9 @@ EXPORTABLE FUNCTIONS
         (or Judy.dll or whatever is appropriate for your platform) if
         Alien::Judy was made responsible for installing libJudy.
 
+    dl_load_libjudy
+        Loads libJudy into the process
+
 AUTHOR
     Josh ben Jore, "<jjore at cpan.org>"
 

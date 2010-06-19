@@ -14,6 +14,7 @@ configure_requires:
   lib: 0
   perl: 5.005
   vars: 0
+  warnings: 0
 dynamic_config: 1
 generated_by: 'Module::Build version 0.3603'
 license: perl
@@ -24,7 +25,9 @@ name: Alien-Judy
 provides:
   Alien::Judy:
     file: lib/Alien/Judy.pm
-    version: 0.17
+    version: 0.18
+requires:
+  Sub::Exporter: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.17
+version: 0.18
