@@ -2,8 +2,19 @@
 abstract: 'A wrapper for installing the Judy library'
 author: []
 build_requires:
+  Cwd: 0
   ExtUtils::CBuilder: 0
+  ExtUtils::Liblist: 0
+  File::Copy: 0
+  File::Path: 0
+  File::Spec: 0
+  Module::Build: 0
+  Sub::Exporter: 0
   Test::More: 0
+  lib: 0
+  perl: 5.005
+  vars: 0
+  warnings: 0
 configure_requires:
   Cwd: 0
   ExtUtils::Liblist: 0
@@ -11,6 +22,7 @@ configure_requires:
   File::Path: 0
   File::Spec: 0
   Module::Build: 0
+  Sub::Exporter: 0
   lib: 0
   perl: 5.005
   vars: 0
@@ -25,9 +37,21 @@ name: Alien-Judy
 provides:
   Alien::Judy:
     file: lib/Alien/Judy.pm
-    version: 0.18
+    version: 0.19
 requires:
+  Cwd: 0
+  ExtUtils::CBuilder: 0
+  ExtUtils::Liblist: 0
+  File::Copy: 0
+  File::Path: 0
+  File::Spec: 0
+  Module::Build: 0
   Sub::Exporter: 0
+  Test::More: 0
+  lib: 0
+  perl: 5.005
+  vars: 0
+  warnings: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.18
+version: 0.19
