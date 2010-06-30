@@ -9,7 +9,6 @@ build_requires:
   File::Path: 0
   File::Spec: 0
   Module::Build: 0
-  Sub::Exporter: 0
   Test::More: 0
   lib: 0
   perl: 5.005
@@ -22,7 +21,6 @@ configure_requires:
   File::Path: 0
   File::Spec: 0
   Module::Build: 0
-  Sub::Exporter: 0
   lib: 0
   perl: 5.005
   vars: 0
@@ -37,7 +35,7 @@ name: Alien-Judy
 provides:
   Alien::Judy:
     file: lib/Alien/Judy.pm
-    version: 0.20
+    version: 0.21
 requires:
   Cwd: 0
   ExtUtils::CBuilder: 0
@@ -54,4 +52,4 @@ requires:
   warnings: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.20
+version: 0.21
