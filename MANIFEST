@@ -4,11 +4,12 @@
 Build.PL
 Changes
 inc/My/Judy/Builder.pm
-inc/Sub/Exporter.pm
 lib/Alien/Judy.pm
 lib/Alien/Judy.pod
 MANIFEST
 MANIFEST.SKIP
+META.yml
+README
 src/judy-1.0.5/aclocal.m4
 src/judy-1.0.5/AUTHORS
 src/judy-1.0.5/autom4te.cache/output.0
@@ -150,5 +151,3 @@ t/00-load.t
 xt/99_critic.t
 xt/99_pod.t
 xt/99_pod_coverage.t
-README
-META.yml

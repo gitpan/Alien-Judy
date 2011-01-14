@@ -8,6 +8,8 @@ build_requires:
   File::Copy: 0
   File::Path: 0
   File::Spec: 0
+  Module::Build: 0
+  Sub::Exporter: 0
   Test::More: 0
   lib: 0
   perl: 5.005
@@ -19,13 +21,14 @@ configure_requires:
   File::Copy: 0
   File::Path: 0
   File::Spec: 0
-  Module::Build: 0.36
+  Module::Build: 0
+  Sub::Exporter: 0
   lib: 0
   perl: 5.005
   vars: 0
   warnings: 0
 dynamic_config: 1
-generated_by: 'Module::Build version 0.3607'
+generated_by: 'Module::Build version 0.3603'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -34,7 +37,7 @@ name: Alien-Judy
 provides:
   Alien::Judy:
     file: lib/Alien/Judy.pm
-    version: 0.22
+    version: 0.23
 requires:
   Cwd: 0
   ExtUtils::CBuilder: 0
@@ -42,6 +45,7 @@ requires:
   File::Copy: 0
   File::Path: 0
   File::Spec: 0
+  Module::Build: 0
   Sub::Exporter: 0
   Test::More: 0
   lib: 0
@@ -50,4 +54,4 @@ requires:
   warnings: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.22
+version: 0.23

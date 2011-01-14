@@ -1,44 +1,12 @@
 #!perl -w
 use strict;
 use 5.005;
+use lib qw( inc lib );
 
-# use inc/latest.pm to load either the bundled inc/Module/Build.pm or
-# your perl's own Module::Build.
-#use inc::latest 'Module::Build';
-require inc::latest;
-push @INC, 'inc';
-inc::latest->import( 'Module::Build' );
-
-# use inc/latest.pm to load either the bundled inc/File/Which.pm or
-# your perl's own File::Which.
-#use inc::latest 'File::Which';
-inc::latest->import( 'File::Which' );
-
-# Add 'inc/' to @INC so the builder will take note of how to find
-# inc/My/Judy/Builder.pm.
-#
-# Load inc/My/Judy/Builder.pm
-require My::Judy::Builder;
-
-# Load *this* Alien::Judy from lib/Alien/Judy.pm and not any copy
-# installed into this perl already.
-require 'lib/Alien/Judy.pm';
-$INC{'Alien/Judy.pm'} = 'lib/Alien/Judy.pm';
-
-# Loading lib/Alien/Judy.pm may load a stub copy of
-# inc/Sub/Exporter.pm. This happens if you do not already have
-# Sub::Exporter installed. The module uses Sub::Exporter for the
-# user's convenience but it is not needed during this Build.PL or
-# Build program.
-#
-# Remove the evidence of my stub Sub::Exporter so Module::Build can
-# still try to resolve the requirement if needed.
-if ( $main::INC_SUB_EXPORTER || $main::INC_SUB_EXPORTER ) {
-    delete $INC{'Sub/Exporter.pm'};
-}
-
-require ExtUtils::Liblist;
-require Config;
+use My::Judy::Builder;
+use Alien::Judy ();
+use ExtUtils::Liblist;
+use Config ();
 
 my %configure_requires = (
     'perl' => '5.005',
@@ -65,6 +33,12 @@ my %configure_requires = (
 
     # Perl 5.6+
     'warnings'          => 0,
+
+    # Perl 5.9.4+
+    'Module::Build'     => 0,
+
+    # CPAN
+    'Sub::Exporter' => 0,
 );
 my %build_requires = (
     %configure_requires,
@@ -77,9 +51,6 @@ my %build_requires = (
 );
 my %requires = (
     %build_requires,
-
-    # CPAN
-    'Sub::Exporter'     => 0,
 );
 
 my $builder = My::Judy::Builder->new(
@@ -98,4 +69,79 @@ my $builder = My::Judy::Builder->new(
 );
 
 $builder->create_build_script();
-$builder->_setup_for_judy;
+
+my $have_judy = 1;
+{
+    local $SIG{__WARN__} = sub {
+        my $warning = "@_";
+        if ( $warning =~ /No library found for -lJudy/ ) {
+            $have_judy = 0;
+        }
+    };
+
+    my $lib_dirs =
+        join ' ',
+        map { "-L$_" }
+        Alien::Judy::lib_dirs();
+
+    ExtUtils::Liblist->ext(
+        "$lib_dirs -lJudy",
+        1
+    );
+}
+$builder->notes('have_judy', $have_judy );
+
+my $build_judy = 'y';
+if ( $have_judy ) {
+    $build_judy = $builder->y_n('Found -lJudy. Build Judy anyway?', 'n');
+}
+$builder->notes('build_judy',$build_judy);
+
+
+if ( $build_judy ) {
+    print q{
+
+---------------------------------------------------------------------
+This module will build and install Judy.
+
+It requires a C compiler and GNU make.
+};
+
+    my $make_def = -x $Config::Config{gmake} ? $Config::Config{gmake} :
+                   -x $Config::Config{make}  ? $Config::Config{make}  :
+                                               $Config::Config{gmake} || $Config::Config{make} || 'make';
+    my $make = $builder->prompt('Make program: ', $make_def );
+    $builder->notes('your_make', $make);
+
+    my $run_configure = 'y';
+    if (    -e 'src/judy-1.0.4/Makefile'
+         && -e 'src/judy-1.0.4/config.h'
+    ) {
+	$run_configure = $builder->y_n("Re-run Judy's configure? ", 'n');
+    }
+    else {
+	$run_configure = $builder->y_n("Run Judy's configure now? ",'y');
+    }
+
+    if ( $run_configure ) {
+	my $configure_args = $builder->prompt(
+            'Pass any arguments to configure: ',
+            $builder->_default_config_args
+        );
+	$builder->notes("configure_args", $configure_args);
+
+	if( $builder->_run_judy_configure ) {
+	    print q{
+
+You should now run ./Build.
+};
+	}
+	else {
+	    print q{
+    Something went wrong with the Judy configuration.
+    You should correct it and re-run Build.PL.
+};
+            exit 1;
+	}
+    }
+}

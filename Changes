@@ -1,16 +1,13 @@
 Revision history for Alien-Judy
 
-0.22    Tue Jun 29, 2010
-        Use older File::Path API to be friendlier to older perls
-        Bundle Module::Build to be friendlier to older perls
-        Bundle File::Which to avoid it as a configure_requires requirement
-        Quashed a "only once" warning
+0.23    Fri Jan 11, 2011
+        Load libJudy.so.1 for OpenSolaris
 
-0.21    Tue Jun 29, 2010
-        Perl's $Config{gmake} isn't reliable so work around that to
-        find a useful GNU make
+0.22    ???
 
-0.20    Mon Jun 28, 2010
+0.21    ???
+
+0.20    Mon Jun 28
         Try to find gmake if it's available
 
 0.19    Tue Jun 22 (during the TPF auction)
