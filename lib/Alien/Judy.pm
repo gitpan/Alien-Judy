@@ -2,6 +2,7 @@
 # natively have libJudy on their system can still get one. It provides
 # libJudy.so and Judy.h at the path $Config{sitearch}/Alien/Judy.
 package Alien::Judy;
+# ABSTRACT: A wrapper for installing the Judy library
 
 use strict;
 use warnings;
@@ -149,6 +150,6 @@ sub dl_load_libjudy {
     return $ok;
 }
 
-$VERSION = '0.24';
+$VERSION = '0.25';
 
 1;

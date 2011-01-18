@@ -1,75 +1,13 @@
-NAME
-    Alien::Judy - A wrapper for installing the Judy library
 
-DESCRIPTION
-    Alien::Judy is a wrapper to ease installing the Judy library from
-    <http://judy.sourceforge.net>.
 
-INSTALLATION
-    To install this module, run the following commands:
+This archive contains the distribution Alien-Judy,
+version 0.25:
 
-        perl Build.PL
-        ./Build
-        ./Build test
-        ./Build install
+  A wrapper for installing the Judy library
 
-EXPORTABLE FUNCTIONS
-    inc_dir
-        Returns a list of directories perhaps likely to contain a Judy.h if
-        Alien::Judy was made responsible for installing libJudy.
+This software is copyright (c) 2011 by Josh Jore.
 
-    lib_dir
-        Returns a list of directories perhaps likely to contain a libJudy.so
-        (or Judy.dll or whatever is appropriate for your platform) if
-        Alien::Judy was made responsible for installing libJudy.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
-    dl_load_libjudy
-        Loads libJudy into the process
-
-AUTHOR
-    Josh ben Jore, "<jjore at cpan.org>"
-
-BUGS
-    Please report any bugs or feature requests to "bug-alien-judy at
-    rt.cpan.org", or through the web interface at
-    <http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Alien-Judy>. I will be
-    notified, and then you'll automatically be notified of progress on your
-    bug as I make changes.
-
-SUPPORT
-    You can find documentation for this module with the perldoc command.
-
-        perldoc Alien::Judy
-
-    You can also look for information at:
-
-    *   RT: CPAN's request tracker
-
-        <http://rt.cpan.org/NoAuth/Bugs.html?Dist=Alien-Judy>
-
-    *   AnnoCPAN: Annotated CPAN documentation
-
-        <http://annocpan.org/dist/Alien-Judy>
-
-    *   CPAN Ratings
-
-        <http://cpanratings.perl.org/d/Alien-Judy>
-
-    *   Search CPAN
-
-        <http://search.cpan.org/dist/Alien-Judy/>
-
-ACKNOWLEDGEMENTS
-    I stole the packaging style from Michael Schwern's Alien::SVN.
-
-Alien::Judy COPYRIGHT & LICENSE
-    Copyright 2008-2010 Josh ben Jore, all rights reserved.
-
-    This program is free software; you can redistribute it and/or modify it
-    under the same terms as Perl itself.
-
-Judy COPYRIGHT & LICENSE
-    The included library Judy-1.0.4 is covered by separate copyright and
-    license. Please consult the library's source code
-    (src/judy-1.0.5/README)for notes about its copyright and licensing.
 
