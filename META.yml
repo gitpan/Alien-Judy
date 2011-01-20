@@ -20,4 +20,4 @@ requires:
   File::Spec: 0
   Sub::Exporter: 0
   vars: 0
-version: 0.25
+version: 0.26
